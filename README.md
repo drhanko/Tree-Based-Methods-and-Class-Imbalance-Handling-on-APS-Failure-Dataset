@@ -46,19 +46,30 @@ measurements.
 
 ### 🔹 Model 1: Random Forest (Baseline)
 
--   Trained on original dataset
--   Ensemble of decision trees
+- Trained on the original dataset
+- Ensemble of decision trees
 
 #### 📊 Evaluation
 
--   Training error
--   Test error
--   OOB (Out-of-Bag) error : 0.00608
-    The OOB error is very close to the test error, which indicates that the model has good generalization ability.Although the training error is zero, this does not necessarily imply severe overfitting. Random forests are capable of fitting the training data very well due to their ensemble of deep decision trees.In addition, the class imbalance may make the classification task easier, as the majority class dominates the dataset. However, the low test error and high AUC suggest that the model is not simply exploiting the imbalance, but is able to generalize well to unseen data.
+- Training error
+- Test error
+- OOB (Out-of-Bag) error: 0.00608
+
+#### 📈 Observations
+
+- The OOB error is close to the test error, suggesting good generalization ability.
+- Although the training error is very low, this does not necessarily indicate severe overfitting, since Random Forest can fit the training data well through an ensemble of deep decision trees.
+- The baseline model achieves strong overall performance:
+  - Accuracy: 0.993
+  - Precision: 0.949
+  - Recall: 0.736
+  - F1-score: 0.829
+- However, the recall is still limited, showing that some minority-class failure cases are missed.
 
 #### ⚠️ Limitation
 
--   Biased toward majority class
+- Biased toward the majority class
+- Minority-class recall can still be improved
 
 ------------------------------------------------------------------------
 
@@ -66,53 +77,108 @@ measurements.
 
 #### ⚠️ Problem
 
--   Failure cases are rare
--   Model tends to ignore minority class
+- Failure cases are rare
+- Models may ignore the minority class
 
-#### ✅ Solution
+#### ✅ Solutions
 
--   **SMOTE (Synthetic Minority Over-sampling Technique)**
--   **Class Weight Balanced**
+- **Class Weight Balanced**
+- **SMOTE (Synthetic Minority Over-sampling Technique)**
 
 #### 📈 Effect
 
--   Balances class distribution
--   Generates synthetic minority samples
+- Class Weight adjusts the penalty for misclassifying the minority class.
+- SMOTE creates synthetic minority samples and changes the training distribution.
+- These methods aim to improve minority-class detection, but their effects are different.
 
 ------------------------------------------------------------------------
 
 ### 🔹 Model 2: Random Forest + Class Weight Balanced
 
--   Trained on rebalanced dataset
+- Trained with `class_weight='balanced'`
 
 #### 📊 Observations
 
--   Recall increases
--   More failures detected
--   False positives increase
--   AUC remains similar
+- Accuracy: 0.989
+- Precision: 0.940
+- Recall: 0.573
+- F1-score: 0.712
+
+#### 📈 Interpretation
+
+- Class weighting does not improve minority-class detection in this dataset.
+- Recall decreases compared to the baseline Random Forest.
+- The model becomes less effective at identifying failure cases.
+- This suggests that class weighting alone is not sufficient for this problem.
 
 ------------------------------------------------------------------------
 
-### 🔹 Model 3: XGBoost (BaseLine)
+### 🔹 Model 3: Random Forest + SMOTE
 
--   Gradient boosting model
+- Trained on a SMOTE-rebalanced dataset
 
-#### 📊 Characteristics
+#### 📊 Observations
 
--   Strong predictive performance
--   Sensitive to hyperparameters
+- Accuracy: 0.992
+- Precision: 0.789
+- Recall: 0.837
+- F1-score: 0.812
+
+#### 📈 Interpretation
+
+- SMOTE significantly improves recall, meaning the model detects more failure cases.
+- The number of false positives increases, which lowers precision.
+- Compared with the baseline model, this approach provides a better balance for minority-class detection.
+- Among the Random Forest variants, SMOTE gives the best recall performance.
 
 ------------------------------------------------------------------------
 
-### 🔹 Model 4: XGBoost + SMOTE
+### 🔹 Model 4: XGBoost (Baseline)
 
--   Gradient boosting model combined with SMOTE for class balancing
+- Gradient boosting model
 
 #### 📊 Characteristics
 
--   Captures complex nonlinear relationships
--   Sensitive to hyperparameters and data distribution
+- Strong predictive performance
+- Sensitive to hyperparameters
+
+#### 📊 Observations
+
+- Accuracy: 0.991
+- Precision: 0.904
+- Recall: 0.704
+- F1-score: 0.791
+
+#### 📈 Interpretation
+
+- XGBoost performs competitively, but it does not outperform the baseline Random Forest.
+- Its recall is slightly lower than Random Forest, indicating weaker minority-class detection.
+- Overall, it is a strong model, but not the best choice for this task without imbalance handling.
+
+------------------------------------------------------------------------
+
+### 🔹 Model 5: XGBoost + SMOTE
+
+- Gradient boosting model combined with SMOTE for class balancing
+
+#### 📊 Characteristics
+
+- Captures complex nonlinear relationships
+- Sensitive to hyperparameters and data distribution
+
+#### 📊 Observations
+
+- Accuracy: 0.980
+- Precision: 0.546
+- Recall: 0.925
+- F1-score: 0.686
+
+#### 📈 Interpretation
+
+- This model achieves the highest recall, meaning it detects the most failure cases.
+- However, precision drops substantially because of many false positives.
+- The model is useful when missing a failure is more costly than raising a false alarm.
+- In terms of balanced performance, it is less stable than Random Forest + SMOTE.
 
 ------------------------------------------------------------------------
 
@@ -183,7 +249,7 @@ measurements.
 | XGBoost             | 0.991    | 0.904    | 0.704  | 0.791    | XX  |
 | XGBoost + SMOTE     | 0.980    | 0.546    | **0.925** | 0.686  | XX  |
 
-#### Insigit
+#### 📌 Insight
 Random Forest achieves the best overall performance, while SMOTE significantly improves recall. Among all methods, Random Forest with SMOTE provides the best balance between precision and recall.
 
 
