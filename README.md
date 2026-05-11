@@ -5,8 +5,8 @@
 This project focuses on solving a **binary classification problem on an
 imbalanced dataset**, using the APS Failure dataset.
 
-The study explores: - Tree-based machine learning models\
-- The impact of **class imbalance**\
+The study explores: - Tree-based machine learning models
+- The impact of **class imbalance**
 - Techniques for improving minority class detection
 
 This project emphasizes **practical implementation and performance
@@ -21,8 +21,8 @@ measurements.
 
 ### 🔹 Key Challenges
 
--   Highly **imbalanced dataset**\
--   Large number of missing values\
+-   Highly **imbalanced dataset**
+-   Large number of missing values
 -   Difficulty detecting rare failure events
 
 ------------------------------------------------------------------------
@@ -31,28 +31,28 @@ measurements.
 
 ### 🔹 Data Preprocessing
 
--   Missing value imputation (Median)\
--   Missing indicator variables\
--   Feature variability analysis (Coefficient of Variation)\
--   Correlation analysis\
+-   Missing value imputation (Median)
+-   Missing indicator variables
+-   Feature variability analysis (Coefficient of Variation)
+-   Correlation analysis
 -   Data visualization
 
 #### 📌 Purpose
 
--   Improve data quality\
+-   Improve data quality
 -   Understand feature behavior
 
 ------------------------------------------------------------------------
 
 ### 🔹 Model 1: Random Forest (Baseline)
 
--   Trained on original dataset\
+-   Trained on original dataset
 -   Ensemble of decision trees
 
 #### 📊 Evaluation
 
--   Training error\
--   Test error\
+-   Training error
+-   Test error
 -   OOB (Out-of-Bag) error
 
 #### ⚠️ Limitation
@@ -65,7 +65,7 @@ measurements.
 
 #### ⚠️ Problem
 
--   Failure cases are rare\
+-   Failure cases are rare
 -   Model tends to ignore minority class
 
 #### ✅ Solution
@@ -74,7 +74,7 @@ measurements.
 
 #### 📈 Effect
 
--   Balances class distribution\
+-   Balances class distribution
 -   Generates synthetic minority samples
 
 ------------------------------------------------------------------------
@@ -85,9 +85,9 @@ measurements.
 
 #### 📊 Observations
 
--   Recall increases\
--   More failures detected\
--   False positives increase\
+-   Recall increases
+-   More failures detected
+-   False positives increase
 -   AUC remains similar
 
 ------------------------------------------------------------------------
@@ -98,7 +98,7 @@ measurements.
 
 #### 📊 Characteristics
 
--   Strong predictive performance\
+-   Strong predictive performance
 -   Sensitive to hyperparameters
 
 ------------------------------------------------------------------------
@@ -116,10 +116,10 @@ measurements.
 
 ### 🔹 Evaluation Metrics
 
--   Accuracy\
--   Precision\
--   Recall\
--   F1-score\
+-   Accuracy
+-   Precision
+-   Recall
+-   F1-score
 -   AUC
 
 ------------------------------------------------------------------------
@@ -132,12 +132,12 @@ measurements.
 
 #### 📊 Label Definition
 
--   `0` → Normal\
+-   `0` → Normal
 -   `1` → Failure
 
 #### 📌 Characteristics
 
--   Highly imbalanced\
+-   Highly imbalanced
 -   Contains many missing values
 
 ------------------------------------------------------------------------
@@ -146,16 +146,16 @@ measurements.
 
 ### 🔹 Random Forest (Baseline)
 
--   High accuracy\
+-   High accuracy
 -   Poor minority class detection
 
 ------------------------------------------------------------------------
 
 ### 🔹 Random Forest + SMOTE
 
--   Significant improvement in Recall\
--   Better detection of failure cases\
--   Increase in false positives\
+-   Significant improvement in Recall
+-   Better detection of failure cases
+-   Increase in false positives
 -   AUC remains similar
 
 ------------------------------------------------------------------------
@@ -265,13 +265,12 @@ jupyter notebook Hsu_WenYen_HW6.ipynb
     ├── Hsu_WenYen_HW6.ipynb
     ├── README.md
     ├── images/
-    │   ├── pipeline.png
     │   ├── correlation_matrix.png
     │   ├── class_distribution.png
     │   ├── rf_confusion_matrix.png
     │   ├── smote_confusion_matrix.png
     │   └── roc_comparison.png
-
+ß
 ------------------------------------------------------------------------
 
 ## 👨‍💻 Author
