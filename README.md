@@ -53,7 +53,8 @@ measurements.
 
 -   Training error
 -   Test error
--   OOB (Out-of-Bag) error
+-   OOB (Out-of-Bag) error : 0.00608
+    The OOB error is very close to the test error, which indicates that the model has good generalization ability.Although the training error is zero, this does not necessarily imply severe overfitting. Random forests are capable of fitting the training data very well due to their ensemble of deep decision trees.In addition, the class imbalance may make the classification task easier, as the majority class dominates the dataset. However, the low test error and high AUC suggest that the model is not simply exploiting the imbalance, but is able to generalize well to unseen data.
 
 #### ⚠️ Limitation
 
@@ -71,6 +72,7 @@ measurements.
 #### ✅ Solution
 
 -   **SMOTE (Synthetic Minority Over-sampling Technique)**
+-   **Class Weight Balanced**
 
 #### 📈 Effect
 
@@ -79,7 +81,7 @@ measurements.
 
 ------------------------------------------------------------------------
 
-### 🔹 Model 2: Random Forest + SMOTE
+### 🔹 Model 2: Random Forest + Class Weight Balanced
 
 -   Trained on rebalanced dataset
 
@@ -92,7 +94,7 @@ measurements.
 
 ------------------------------------------------------------------------
 
-### 🔹 Model 3: XGBoost
+### 🔹 Model 3: XGBoost (BaseLine)
 
 -   Gradient boosting model
 
@@ -100,6 +102,17 @@ measurements.
 
 -   Strong predictive performance
 -   Sensitive to hyperparameters
+
+------------------------------------------------------------------------
+
+### 🔹 Model 4: XGBoost + SMOTE
+
+-   Gradient boosting model combined with SMOTE for class balancing
+
+#### 📊 Characteristics
+
+-   Captures complex nonlinear relationships
+-   Sensitive to hyperparameters and data distribution
 
 ------------------------------------------------------------------------
 
@@ -111,7 +124,7 @@ measurements.
 
 ### 🔹 Models Used
 
--   Random Forest\
+-   Random Forest
 -   XGBoost
 
 ### 🔹 Evaluation Metrics
@@ -162,11 +175,17 @@ measurements.
 
 ### 🔹 Model Comparison
 
-  Model           Accuracy   Precision   Recall   AUC
-  --------------- ---------- ----------- -------- -----
-  Random Forest   XX         XX          XX       XX
-  RF + SMOTE      XX         XX          XX       XX
-  XGBoost         XX         XX          XX       XX
+| Model               | Accuracy | Precision | Recall | F1-score | AUC |
+|--------------------|----------|----------|--------|----------|-----|
+| Random Forest       | **0.993**| **0.949**| 0.736  | **0.829**| XX  |
+| RF + Class Weight   | 0.989    | 0.940    | 0.573  | 0.712    | XX  |
+| RF + SMOTE          | 0.992    | 0.789    | **0.837** | 0.812  | XX  |
+| XGBoost             | 0.991    | 0.904    | 0.704  | 0.791    | XX  |
+| XGBoost + SMOTE     | 0.980    | 0.546    | **0.925** | 0.686  | XX  |
+
+#### Insigit
+Random Forest achieves the best overall performance, while SMOTE significantly improves recall. Among all methods, Random Forest with SMOTE provides the best balance between precision and recall.
+
 
 ------------------------------------------------------------------------
 
@@ -178,31 +197,38 @@ measurements.
 
 #### 📌 Insight
 
--   Some features are highly correlated\
+-   Some features are highly correlated
 -   Tree models are less affected by multicollinearity
 
 ------------------------------------------------------------------------
 
-### 🔹 Class Distribution
+### 🔹 Feature distribution / Feature vs class analysis
 
-![Distribution](images/class_distribution.png)
+![Distribution : Example: co_000 vs cf_000](images/feature_distribution.png)
 
 #### 📌 Insight
 
--   Severe class imbalance\
+-   Severe class imbalance
 -   Resampling is necessary
 
 ------------------------------------------------------------------------
 
 ### 🔹 Confusion Matrix (Before SMOTE)
 
-![RF CM](images/rf_confusion_matrix.png)
+![RF Train CM](images/RandomForest_Train_Confusion_Matrix.png)
+![RF Test CM](images/RandomForest_Test_Confusion_Matrix.png)
+![RF Balanced Train CM](images/RandomForest_balanced_Train_Confusion_Matrix.png)
+![RF Balanced Test CM](images/RandomForest_balanced_Test_Confusion_Matrix.png)
+![XGBoost Train CM](images/XGBoost_Train_Confusion_Matrix.png)
+![XGBoost Test CM](images/XGBoost_Test_Confusion_Matrix.png)
 
 ------------------------------------------------------------------------
 
 ### 🔹 Confusion Matrix (After SMOTE)
-
-![SMOTE CM](images/smote_confusion_matrix.png)
+![RF SMOTE Train CM](images/RandomForest_smote_Train_Confusion_Matrix.png)
+![RF SMOTE Test CM](images/RandomForest_smote_Test_Confusion_Matrix.png)
+![XGBoost SMOTE Train CM](images/XGBoost_smote_Train_Confusion_Matrix.png)
+![XGBoost SMOTE CM](images/XGBoost_smote_Test_Confusion_Matrix.png)
 
 #### 📌 Insight
 
@@ -212,11 +238,15 @@ measurements.
 
 ### 🔹 ROC Curve Comparison
 
-![ROC](images/roc_comparison.png)
+![RF ROC](images/RandomForest_ROC_Curve.png)
+![RF Balanced ROC](images/RandomForest_balanced_ROC_Curve.png)
+![RF SMOTE ROC](images/RandomForest_smote_ROC_Curve.png)
+![XGBoost ROC](images/XGBoost_ROC_Curve.png)
+![XGBoost SMOTE ROC](images/XGBoost_smote_ROC_Curve.png)
 
 #### 📌 Insight
 
--   Similar AUC across models\
+-   Similar AUC across models
 -   AUC alone is insufficient for imbalanced data
 
 ------------------------------------------------------------------------
@@ -253,24 +283,32 @@ jupyter notebook Hsu_WenYen_HW6.ipynb
 ## 🧩 Notes
 
 -   Tree-based models are robust to:
-    -   Outliers\
-    -   Correlated features\
--   SMOTE may introduce noise\
+    -   Outliers
+    -   Correlated features
+-   SMOTE may introduce noise
 -   Model choice depends on application needs
 
 ------------------------------------------------------------------------
 
 ## 📂 Project Structure
 
-    ├── Hsu_WenYen_HW6.ipynb
-    ├── README.md
-    ├── images/
-    │   ├── correlation_matrix.png
-    │   ├── class_distribution.png
-    │   ├── rf_confusion_matrix.png
-    │   ├── smote_confusion_matrix.png
-    │   └── roc_comparison.png
-ß
+├── Hsu_WenYen_HW6.ipynb
+├── README.md
+├── images/
+│   ├── correlation_matrix.png
+│   ├── feature_distribution.png
+│   ├── RandomForest_ROC_Curve.png
+│   ├── RandomForest_Train_Confusion_Matrix.png
+│   ├── RandomForest_Test_Confusion_Matrix.png
+│   ├── RandomForest_balanced_ROC_Curve.png
+│   ├── RandomForest_balanced_Train_Confusion_Matrix.png
+│   ├── RandomForest_balanced_Test_Confusion_Matrix.png
+│   ├── XGBoost_ROC_Curve.png
+│   ├── XGBoost_Train_Confusion_Matrix.png
+│   ├── XGBoost_Test_Confusion_Matrix.png
+│   ├── XGBoost_smote_ROC_Curve.png
+│   ├── XGBoost_smote_Train_Confusion_Matrix.png
+│   └── XGBoost_smote_Test_Confusion_Matrix.png
 ------------------------------------------------------------------------
 
 ## 👨‍💻 Author
