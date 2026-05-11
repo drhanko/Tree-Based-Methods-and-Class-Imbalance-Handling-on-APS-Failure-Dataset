@@ -243,11 +243,11 @@ measurements.
 
 | Model               | Accuracy | Precision | Recall | F1-score | AUC |
 |--------------------|----------|----------|--------|----------|-----|
-| Random Forest       | **0.993**| **0.949**| 0.736  | **0.829**| XX  |
-| RF + Class Weight   | 0.989    | 0.940    | 0.573  | 0.712    | XX  |
-| RF + SMOTE          | 0.992    | 0.789    | **0.837** | 0.812  | XX  |
-| XGBoost             | 0.991    | 0.904    | 0.704  | 0.791    | XX  |
-| XGBoost + SMOTE     | 0.980    | 0.546    | **0.925** | 0.686  | XX  |
+| Random Forest       | **0.993**| **0.949**| 0.736  | **0.829**| 0.993 |
+| RF + Class Weight   | 0.989    | 0.940    | 0.573  | 0.712    | 0.992  |
+| RF + SMOTE          | 0.992    | 0.789    | **0.837** | 0.812  | 0.993  |
+| XGBoost             | 0.991    | 0.904    | 0.704  | 0.791    | 0.996  |
+| XGBoost + SMOTE     | 0.980    | 0.546    | **0.925** | 0.686  |  0.994 |
 
 #### 📌 Insight
 Random Forest achieves the best overall performance, while SMOTE significantly improves recall. Among all methods, Random Forest with SMOTE provides the best balance between precision and recall.
