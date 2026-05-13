@@ -357,8 +357,9 @@ jupyter notebook Hsu_WenYen_HW6.ipynb
 ------------------------------------------------------------------------
 
 ## 📂 Project Structure
-
-├── Hsu_WenYen_HW6.ipynb
+├── data/
+├── notebooks/
+│   └── APS Failure Prediction with Tree-Based Models.ipynb
 ├── README.md
 ├── images/
 │   ├── correlation_matrix.png
@@ -375,6 +376,7 @@ jupyter notebook Hsu_WenYen_HW6.ipynb
 │   ├── XGBoost_smote_ROC_Curve.png
 │   ├── XGBoost_smote_Train_Confusion_Matrix.png
 │   └── XGBoost_smote_Test_Confusion_Matrix.png
+└── requirements.txt
 ------------------------------------------------------------------------
 
 ## 👨‍💻 Author
